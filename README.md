@@ -29,3 +29,5 @@ var encoded_desynced_string = ObjectToDesyncedString(obj, type);
 
 ## License
 The code in this project is available under the [MIT license](https://choosealicense.com/licenses/mit/).
+
+The file [dsconvert.js](dsconvert.js) includes parts of [zlib.js](https://github.com/imaya/zlib.js) which is copyright © 2012 imaya and also licensed under the MIT License.
