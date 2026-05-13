@@ -27,7 +27,7 @@ a:hover { color: #f26c43 }
 <tr><th style="padding:6pt">Convert to or from JSON</th></tr>
 <tr><td style="padding:6pt"><button style="width:100%;height:4em" onclick="run();">Convert to or from JSON</button></td></tr>
 <tr><th style="padding:6pt">Output</th></tr>
-<tr><td style="padding:6pt">Type:<br><input id="typ" style="width:100%"/><br>Result</br><textarea type="text" id="outp" rows=24 cols=120 readonly></textarea></td></tr>
+<tr><td style="padding:6pt">Type:<br><input id="typ" style="width:100%"/><br>Result:<br><textarea type="text" id="outp" rows=24 cols=120 readonly></textarea><br>Subroutine map:<br><textarea type="text" id="submap" rows=24 cols=120 readonly></textarea></td></tr>
 </table>
 
 <script src="dsconvert.js" type="text/javascript"></script>
@@ -43,6 +43,15 @@ function run()
 			var info = {}, obj = DesyncedStringToObject(str, info);
 			document.getElementById('outp').value = JSON.stringify(obj, null, 4);
 			document.getElementById('typ').value = info.type + " (" + (info.type == "B" ? "BLUEPRINT" : (info.type == "C" ? "BEHAVIOR" : (info.type == "R" ? "REGISTER" : "UNKNOWN"))) + ")";
+			if (info.type == "C" && obj.dependencies)
+			{
+				let mapstr = "";
+				for (let i = 0; i < obj.dependencies.length; ++i)
+					mapstr += (i + 1) + ": " + obj.dependencies[i].name + "\n";
+				document.getElementById('submap').value = mapstr;
+			}
+			else
+				document.getElementById('submap').value = "";
 		}
 		else
 		{
@@ -55,6 +64,7 @@ function run()
 	{
 		document.getElementById('outp').value = "ERROR: " + e.message;
 		document.getElementById('typ').value = "";
+		document.getElementById('submap').value = "";
 	}
 }
 </script>
